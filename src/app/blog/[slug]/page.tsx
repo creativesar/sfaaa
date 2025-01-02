@@ -27,7 +27,9 @@ interface Params {
   };
 }
 
-export default async function BlogPostPage({ params: { slug } }: Params) {
+export default async function BlogPostPage({ params }: Params) {
+  const { slug } = params;
+
   // Query to fetch the blog post by its slug
   const query = `*[_type=='post' && slug.current == $slug]{
     title, summary, image, content,
@@ -63,7 +65,7 @@ export default async function BlogPostPage({ params: { slug } }: Params) {
         {/* Post Image */}
         <div className="lg:w-1/2">
           <Image
-            src={urlFor(image).url()}
+            src={urlFor(image).url() || "/placeholder.jpg"} // Ensure fallback URL
             width={600}
             height={600}
             alt={title}
@@ -75,7 +77,7 @@ export default async function BlogPostPage({ params: { slug } }: Params) {
           {/* Author Information */}
           <section className="flex gap-4 items-center mb-8">
             <Image
-              src={urlFor(author.image).url()}
+              src={urlFor(author.image).url() || "/placeholder.jpg"} // Ensure fallback URL
               width={50}
               height={50}
               alt={author.name}
