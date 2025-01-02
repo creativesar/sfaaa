@@ -21,7 +21,13 @@ export async function generateStaticParams() {
 }
 
 // BlogPostPage Component: Render a specific blog post
-export default async function BlogPostPage({ params: { slug } }) {
+interface Params {
+  params: {
+    slug: string;
+  };
+}
+
+export default async function BlogPostPage({ params: { slug } }: Params) {
   // Query to fetch the blog post by its slug
   const query = `*[_type=='post' && slug.current == $slug]{
     title, summary, image, content,
